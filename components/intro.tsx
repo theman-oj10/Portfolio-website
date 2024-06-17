@@ -4,22 +4,24 @@ import Image from "next/image";
 import React from "react";
 import pfp from "@/public/devpic.png";
 import { motion } from "framer-motion";
-import { BsArrowRight, BsLinkedin, BsArrowRightSquare } from "react-icons/bs";
+import { BsArrowRight, BsLinkedin } from "react-icons/bs";
 import Link from "next/link";
 import { HiDownload } from "react-icons/hi";
 import { FaGithub } from "react-icons/fa";
-import { useSectionInView } from "@/lib/hooks";
+import { useSectionInView, useIsClient } from "@/lib/hooks";
 import { useActiveSectionContext } from "@/context/active-section-context";
+import TypewriterEffect from './TypewriterEffect';
 
 export default function Intro() {
   const { ref } = useSectionInView("Home", 0.5);
   const { setActiveSection, setTimeOfLastClick } = useActiveSectionContext();
+  const isClient = useIsClient();
 
   return (
     <section
-      ref={ref}
       id="home"
-      className="mb-28 max-w-[50rem] text-center sm:mb-0 scroll-mt-[100rem] pb-20" // Add pb-20 here
+      ref={ref}
+      className="mb-28 max-w-[50rem] text-center sm:mb-0 scroll-mt-[100rem] pb-20"
     >
       <div className="flex items-center justify-center">
         <div className="relative">
@@ -57,17 +59,15 @@ export default function Intro() {
         </div>
       </div>
       <motion.h1
-        className="mb-10 mt-4 px-4 text-2xl font-medium !leading-[1.5]"
+        className="mb-10 mt-4 px-4 text-3xl font-bold leading-tight"
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <p className="my-5 font-bold">Manoj Narender</p>
-        <p className="my-5">NUS | Computer Science and Quantitative Finance</p>
-        <p className="my-5">
-          My interests now are in{" "}
-          <span className="font-bold">Machine Learning</span>,{" "}
-          <span className="font-bold">Full-Stack Development</span> and{" "}
-          <span className="font-bold">Fintech</span>.
+        <p className="my-5 text-5xl">Manoj Narender</p>
+        <p className="my-5 text-2xl font-semibold">NUS Computer Science and Quantitative Finance</p>
+        <p className="my-5 text-xl font-normal">
+          I'm interested in{" "}
+          {isClient && <TypewriterEffect />}
         </p>
       </motion.h1>
 
