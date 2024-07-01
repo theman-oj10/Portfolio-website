@@ -1,46 +1,68 @@
-"use client";
-
-import { useSectionInView } from '@/lib/hooks'
-import React from 'react'
-import SectionHeading from './section-heading';
-import { FaPaperPlane } from 'react-icons/fa';
-import { motion } from "framer-motion"
+'use client';
+import React, { useRef } from 'react';
 import { sendEmail } from '@/actions/sendEmail';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+import SectionHeading from './section-heading';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
-export default function Contact() {
+const ContactForm = () => {
+  const sectionRef = useRef(null);
 
-    const { ref } = useSectionInView("Contact"); 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    try {
+      const response = await sendEmail(formData);
+      if (response.status === 'success') {
+        alert('Email sent successfully!');
+      } else {
+        alert('Failed to send email.');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('Failed to send email.');
+    }
+  };
 
-    return (
-        <motion.section id="contact" ref={ref}
-        className="mb-20 sm:mb-28 w-[min(100%,38rem)] text-center"
-        initial={{opacity:0}}
-        whileInView={{opacity:1}}
-        transition={{duration:1}}
-        viewport={{once:true}}>
-            <SectionHeading>Contact</SectionHeading>
-            <p className="text-gray-700 -mt-6 dark:text-white/90">
-                You can contact me directly at {" "}
-                <a className="underline" href="mailto:manojnarender@u.nus.edu">manojnarender@u.nus.edu</a>
-                {" "} or through this form.
-            </p>
-
-            <form className="mt-10 flex flex-col dark:text-gray-700/90"
-            action={async (formData) => {
-                await sendEmail(formData);
-            }}>
-                <input type="email"
-                required
-                name="senderEmail"
-                maxLength={500}
-                placeholder="Your email" className="h-14 px-4 rounded-lg border border-black/10 dark:bg-white dark:bg-opacity-80 dark:focus:bg-opacity-100 transition-all dark:outline-none" />
-                <textarea 
-                required
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <section id="contact" ref={sectionRef} className="mb-28 w-full mx-auto scroll-mt-28 sm:mb-40">
+        <div className="max-w-3xl mx-auto px-4">
+          <SectionHeading>Hit me up!</SectionHeading>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="name" className="block text-left">Name</Label>
+              <Input type="text" name="name" id="name" required placeholder="Your name" className="w-full" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="senderEmail" className="block text-left">Email</Label>
+              <Input type="email" name="senderEmail" id="senderEmail" required placeholder="Your email" className="w-full" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="company-name" className="block text-left">Company Name</Label>
+              <Input type="text" name="company-name" id="company-name" required placeholder="Your Company's name" className="w-full" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="message" className="block text-left">Message</Label>
+              <textarea
                 name="message"
-                maxLength={500}
-                placeholder="Your message" className="h-52 my-3 rounded-lg border-black/10 p-4 dark:bg-white dark:bg-opacity-80 dark:focus:bg-opacity-100 transition-all dark:outline-none" />
-                <button type="submit" className="flex group h-[3rem] w-[8rem] rounded-full bg-gray-900 text-white outline-none transition-all items-center justify-center gap-2 focus:scale-110 hover:scale-110 active:scale-105 hover:bg-gray-950 dark:bg-white dark:bg-opacity-10">Submit <FaPaperPlane className="text-xs opacity-70 transition-all group-hover:translate-x-1 group-hover:-translate-y-1" /></button>
-            </form>
-        </motion.section>
-    )
-}
+                id="message"
+                required
+                placeholder="Your message"
+                rows={6}
+                className="w-full resize-none border border-gray-300 bg-transparent p-2 rounded-md"
+              ></textarea>
+            </div>
+            <div className="text-center">
+              <button type="submit" className="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors">Submit</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </DndProvider>
+  );
+};
+
+export default ContactForm;
