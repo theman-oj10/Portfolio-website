@@ -66,7 +66,7 @@ export default function Intro() {
         <p className="my-5 text-5xl">Manoj Narender</p>
         <p className="my-5 text-2xl font-semibold">NUS Computer Science and Quantitative Finance</p>
         <p className="my-5 text-xl font-normal">
-          I'm interested in{" "}
+          I&#39;m interested in{" "}
           {isClient && <TypewriterEffect />}
         </p>
       </motion.h1>
