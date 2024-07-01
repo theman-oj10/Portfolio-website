@@ -15,8 +15,8 @@ const fadeInAnimationVariants = {
         const y = Math.sin(angle) * 1500; // Set Y coordinate based on angle, larger value to move outside the viewport
         return {
             opacity: 0,
-            x,
-            y,
+            x: Math.round(x * 100) / 100, // Round to ensure consistency
+            y: Math.round(y * 100) / 100, // Round to ensure consistency
         };
     },
     visible: (index: number) => ({

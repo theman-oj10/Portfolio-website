@@ -1,13 +1,11 @@
 import React from "react";
-import { CgWorkAlt } from "react-icons/cg";
-import { FaReact } from "react-icons/fa";
 import { LuBriefcase, LuGraduationCap, LuHammer, LuHome } from "react-icons/lu";
-import portfolio1 from "@/public/portfolio-1.png";
-import portfolio2 from "@/public/portfolio-2.png";
-import portfolio3 from "@/public/portfolio-3.png";
-import portfolio4 from "@/public/portfolio-4.png";
-import akparticles from "@/public/arknights-particles.png";
-import cnndigits from "@/public/cnn-digits.png";
+import HangImg from "@/public/Hang-UI.png";
+import RhAppImg from "@/public/rhapp-ui.png";
+import CareerSyncImg from "@/public/careersync-ui.png";
+import RhWebsiteImg from "@/public/rhwebsite-ui.png";
+import AlfredImg from "@/public/alfred-ui.png";
+import HoopifyImg from "@/public/hoopify4.png";
 
 export const links = [
   {
@@ -77,42 +75,42 @@ export const projectsData = [
     title: "Hoopify",
     description: "Cross-platform mobile app that analyzes user-uploaded basketball videos and provides in-depth analytics",
     tags: ["React Native", "OpenCV", "Flask", "Firebase", "Google Cloud"],
-    imageUrl: portfolio4,
+    imageUrl: HoopifyImg,
   },
   {
     title: "Hang",
     description:
       "Web app with a custom recommendation engine that leverages user profiles to curate activities and food options.",
     tags: ["React.js", "Node.js", "Express.js", "MongoDB"],
-    imageUrl: akparticles,
+    imageUrl: HangImg,
   },
   {
     title: "Raffles Hall App",
     description:
       "Web app for Raffles Hall residents to access hall events, facilities and services.",
     tags: ["React.js", "TypeScript", "Redux", "Flask", "MongoDB"],
-    imageUrl: cnndigits,
+    imageUrl: RhAppImg,
   },
   {
     title: "CareerSync",
     description:
       "Desktop application for Internship Management catered to users who prefer a CLI",
     tags: ["Java", "JavaFx", "JUnit", "Github Actions"],
-    imageUrl: portfolio3,
+    imageUrl: CareerSyncImg,
   },
   {
     title: "Raffles Hall Website",
     description:
       "Web app for outsiders to find out about Raffles Hall and it's events",
     tags: ["Flask", "MongoDB", "React.js", "Redux"],
-    imageUrl: portfolio2,
+    imageUrl: RhWebsiteImg,
   },
   {
     title: "Alfred",
     description:
       "Desktop Application for managing tasks and reminders",
     tags: ["Java", "JavaFx", "JUnit"],
-    imageUrl: portfolio1,
+    imageUrl: AlfredImg,
   },
 ] as const;
 
