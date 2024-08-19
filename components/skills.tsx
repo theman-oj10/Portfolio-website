@@ -4,19 +4,21 @@ import React, { useEffect, useState, useRef } from 'react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import SectionHeading from './section-heading';
-import { skillsData } from '@/lib/data';
+import { skillsData, skillsIcons } from '@/lib/data';
 import { useSectionInView } from '@/lib/hooks';
 import { motion, useAnimation, useInView } from "framer-motion";
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 
 const fadeInAnimationVariants = {
     hidden: (index: number) => {
-        const angle = (index / skillsData.length) * Math.PI * 2; // Calculate angle for circular motion
-        const x = Math.cos(angle) * 1500; // Set X coordinate based on angle, larger value to move outside the viewport
-        const y = Math.sin(angle) * 1500; // Set Y coordinate based on angle, larger value to move outside the viewport
+        const angle = (index / skillsData.length) * Math.PI * 2;
+        const x = Math.cos(angle) * 1500;
+        const y = Math.sin(angle) * 1500;
         return {
             opacity: 0,
-            x: Math.round(x * 100) / 100, // Round to ensure consistency
-            y: Math.round(y * 100) / 100, // Round to ensure consistency
+            x: Math.round(x * 100) / 100,
+            y: Math.round(y * 100) / 100,
         };
     },
     visible: (index: number) => ({
@@ -49,39 +51,73 @@ interface DragItem {
 }
 
 function DraggableSkill({ skill, index, moveSkill, controls }: SkillProps) {
-    const [, ref] = useDrag({
-        type: ItemTypes.SKILL,
-        item: { index },
-    });
+    const ref = useRef<HTMLLIElement>(null);
 
-    const [, drop] = useDrop<DragItem>({
+    const [{ handlerId }, drop] = useDrop<DragItem, void, { handlerId: string | symbol | null }>({
         accept: ItemTypes.SKILL,
-        hover: (draggedItem) => {
-            if (draggedItem.index !== index) {
-                moveSkill(draggedItem.index, index);
-                draggedItem.index = index;
+        collect(monitor) {
+            return {
+                handlerId: monitor.getHandlerId(),
+            };
+        },
+        hover(item: DragItem, monitor) {
+            if (!ref.current) {
+                return;
             }
+            const dragIndex = item.index;
+            const hoverIndex = index;
+
+            if (dragIndex === hoverIndex) {
+                return;
+            }
+
+            moveSkill(dragIndex, hoverIndex);
+            item.index = hoverIndex;
         },
     });
 
+    const [{ isDragging }, drag] = useDrag({
+        type: ItemTypes.SKILL,
+        item: () => {
+            return { index };
+        },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    });
+
+    const opacity = isDragging ? 0.4 : 1;
+    drag(drop(ref));
+
+    const IconComponent = skillsIcons[skill as keyof typeof skillsIcons];
+
     return (
         <motion.li
-            ref={(node) => ref(drop(node))}
+            ref={ref}
             custom={index}
             initial="hidden"
             animate={controls}
             variants={fadeInAnimationVariants}
-            whileHover={{ scale: 1.2 }}
-            className="bg-white border border-black/[0.1] rounded-xl px-5 py-3 dark:bg-white/10 dark:text-white/80"
+            whileHover={{ scale: 1.1 }}
+            style={{ opacity }}
+            className="bg-white border border-black/[0.1] rounded-xl p-4 dark:bg-white/10 dark:text-white/80 cursor-move flex items-center justify-center w-20 h-20"
+            data-tooltip-id={`skill-tooltip-${index}`}
+            data-tooltip-content={skill}
+            data-handler-id={handlerId}
         >
-            {skill}
+            {IconComponent ? (
+                <IconComponent size={36} />
+            ) : (
+                <span className="text-sm">{skill}</span>
+            )}
+            <Tooltip id={`skill-tooltip-${index}`} />
         </motion.li>
     );
 }
 
 export default function Skills() {
     const { ref } = useSectionInView("Skills");
-    const [skills, setSkills] = useState<string[]>([...skillsData]); // Convert to mutable array
+    const [skills, setSkills] = useState<string[]>([...skillsData]);
     const controls = useAnimation();
     const sectionRef = useRef(null);
     const inView = useInView(sectionRef, { once: true });
@@ -93,20 +129,22 @@ export default function Skills() {
     }, [inView, controls]);
 
     const moveSkill = (fromIndex: number, toIndex: number) => {
-        const updatedSkills = [...skills];
-        const [movedSkill] = updatedSkills.splice(fromIndex, 1);
-        updatedSkills.splice(toIndex, 0, movedSkill);
-        setSkills(updatedSkills);
+        setSkills((prevSkills) => {
+            const updatedSkills = [...prevSkills];
+            const [movedSkill] = updatedSkills.splice(fromIndex, 1);
+            updatedSkills.splice(toIndex, 0, movedSkill);
+            return updatedSkills;
+        });
     };
 
     return (
         <DndProvider backend={HTML5Backend}>
             <section id="skills" ref={sectionRef} className="mb-28 max-w-[53rem] scroll-mt-28 text-center sm:mb-40">
                 <SectionHeading>Skills</SectionHeading>
-                <ul className="flex flex-wrap justify-center gap-2 text-lg text-gray-800">
+                <ul className="flex flex-wrap justify-center gap-3 text-lg text-gray-800">
                     {skills.map((skill, index) => (
                         <DraggableSkill
-                            key={index}
+                            key={skill}
                             index={index}
                             skill={skill}
                             moveSkill={moveSkill}
