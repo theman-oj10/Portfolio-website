@@ -3,6 +3,8 @@
 
 import { supabase } from '@/lib/supabase'
 import { Testimonial } from '@/types/testimonial'
+import { ratelimit } from '@/lib/ratelimit'
+import { headers } from 'next/headers'
 
 export async function getTestimonials(): Promise<Testimonial[]> {
   const { data, error } = await supabase
@@ -34,6 +36,21 @@ interface SentimentResponse {
 
 export async function addTestimonial(testimonial: Omit<Testimonial, 'id' | 'date' | 'approved'>) {
   try {
+     // Get IP for rate limiting
+    const ip = headers().get('x-forwarded-for') || 'anonymous'
+    
+    // Check rate limit
+    const { success, reset, remaining } = await ratelimit.check(ip)
+    
+    if (!success) {
+      const now = Date.now()
+      const timeRemaining = Math.floor((reset - now) / 1000 / 60) // minutes remaining
+      throw new Error(
+        `Rate limit exceeded. Please try again in ${timeRemaining} minutes. ` +
+        `You have ${remaining} submissions remaining.`
+      )
+    }
+
     // Analyze sentiment using the NLP API
     const nlpResponse = await fetch(`${process.env.REACT_APP_NLP_URI}/analyze`, {
       method: 'POST',

@@ -16,7 +16,8 @@ export default function Testimonials() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  
+  const [charCount, setCharCount] = useState(0)
+
   const [newTestimonial, setNewTestimonial] = useState({
     name: '',
     role: '',
@@ -66,14 +67,20 @@ export default function Testimonials() {
   }
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target
-    setNewTestimonial((prev) => ({
-      ...prev,
-      [name]: value
-    }))
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+  const { name, value } = e.target
+  if (name === 'message' && value.length > 500) return // Prevent input beyond 500 chars
+  
+  setNewTestimonial((prev) => ({
+    ...prev,
+    [name]: value
+  }))
+  
+  if (name === 'message') {
+    setCharCount(value.length)
   }
+}
 
   // Duplicate testimonials for seamless loop
   const duplicatedTestimonials = [...testimonials, ...testimonials]
@@ -208,24 +215,28 @@ export default function Testimonials() {
               />
             </div>
             <div>
-              <label
+            <label
                 htmlFor="message"
                 className="block mb-2 text-gray-900 dark:text-white font-medium"
-              >
+            >
                 Message
-              </label>
-              <textarea
+            </label>
+            <textarea
                 id="message"
                 name="message"
                 value={newTestimonial.message}
                 onChange={handleChange}
                 required
+                maxLength={500}
                 placeholder="Share your experience..."
                 rows={4}
                 className={`w-full p-3 rounded-lg bg-white dark:bg-gray-700 border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
-                  theme === 'light' ? 'border-gray-300' : 'border-gray-600'
+                theme === 'light' ? 'border-gray-300' : 'border-gray-600'
                 }`}
-              />
+            />
+            <div className="mt-1 text-sm text-gray-500 dark:text-gray-400 text-right">
+                {charCount}/500 characters
+            </div>
             </div>
             <div className="flex justify-center">
               <button
