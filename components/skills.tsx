@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import SectionHeading from './section-heading';
 import { skillsData, skillsIcons } from '@/lib/data';
 import { useSectionInView } from '@/lib/hooks';
-import { motion, useAnimation, useInView } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 
@@ -51,7 +51,7 @@ interface DragItem {
 }
 
 function DraggableSkill({ skill, index, moveSkill, controls }: SkillProps) {
-    const ref = useRef<HTMLLIElement>(null);
+    const ref = React.useRef<HTMLLIElement>(null);
 
     const [{ handlerId }, drop] = useDrop<DragItem, void, { handlerId: string | symbol | null }>({
         accept: ItemTypes.SKILL,
@@ -116,17 +116,13 @@ function DraggableSkill({ skill, index, moveSkill, controls }: SkillProps) {
 }
 
 export default function Skills() {
-    const { ref } = useSectionInView("Skills");
-    const [skills, setSkills] = useState<string[]>([...skillsData]);
     const controls = useAnimation();
-    const sectionRef = useRef(null);
-    const inView = useInView(sectionRef, { once: true });
+    const [skills, setSkills] = useState<string[]>([...skillsData]);
+    const { ref } = useSectionInView("Skills", 0.5);
 
     useEffect(() => {
-        if (inView) {
-            controls.start("visible");
-        }
-    }, [inView, controls]);
+        controls.start("visible");
+    }, [controls]);
 
     const moveSkill = (fromIndex: number, toIndex: number) => {
         setSkills((prevSkills) => {
@@ -139,7 +135,11 @@ export default function Skills() {
 
     return (
         <DndProvider backend={HTML5Backend}>
-            <section id="skills" ref={sectionRef} className="mb-28 max-w-[53rem] scroll-mt-28 text-center sm:mb-40">
+            <section 
+                ref={ref}
+                id="skills" 
+                className="mb-28 max-w-[53rem] scroll-mt-28 text-center sm:mb-40"
+            >
                 <SectionHeading>Skills</SectionHeading>
                 <ul className="flex flex-wrap justify-center gap-3 text-lg text-gray-800">
                     {skills.map((skill, index) => (

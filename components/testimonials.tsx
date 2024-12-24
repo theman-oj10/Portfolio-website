@@ -12,7 +12,7 @@ import toast from 'react-hot-toast'
 import { Toaster } from 'react-hot-toast'
 
 export default function Testimonials() {
-  const { ref } = useSectionInView('Testimonials')
+  const { ref } = useSectionInView('Testimonials', 0.4)
   const { theme } = useTheme()
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -105,7 +105,7 @@ export default function Testimonials() {
     <div className="w-full px-4">
       <SectionHeading>Testimonials</SectionHeading>
       <p className="text-center mb-8 text-gray-600 dark:text-gray-400">
-        Note that you CAN&apos;'T say anything bad as there is an NLP model that will filter out bad comments 😊
+        Note that you CAN&apos;T say anything bad as there is an NLP model that will filter out bad comments 😊
       </p>
     </div>
 
@@ -148,7 +148,7 @@ export default function Testimonials() {
                     <div>
                       <FaQuoteLeft className="text-3xl text-gray-300 dark:text-gray-700 mb-4" />
                       <p className="text-lg italic text-gray-700 dark:text-white/80">
-                        &quot;"{testimonial.message}&quot;"
+                        &quot;{testimonial.message}&quot;
                       </p>
                     </div>
                     <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700 mt-4">
