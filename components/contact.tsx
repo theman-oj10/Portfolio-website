@@ -1,14 +1,15 @@
 'use client';
-import React, { useRef } from 'react';
+import React from 'react';
 import { sendEmail } from '@/actions/sendEmail';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import SectionHeading from './section-heading';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useSectionInView } from '@/lib/hooks';
 
 const ContactForm = () => {
-  const sectionRef = useRef(null);
+  const { ref } = useSectionInView("Contact", 0.5);  // Changed threshold and properly destructured ref
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,7 +29,7 @@ const ContactForm = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <section id="contact" ref={sectionRef} className="mb-28 w-full mx-auto scroll-mt-28 sm:mb-40">
+      <section id="contact" ref={ref} className="mb-28 w-full mx-auto scroll-mt-28 sm:mb-40">
         <div className="max-w-3xl mx-auto px-4">
           <SectionHeading>Hit me up!</SectionHeading>
           <form onSubmit={handleSubmit} className="space-y-6">
