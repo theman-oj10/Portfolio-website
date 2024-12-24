@@ -8,9 +8,9 @@ const texts = [
 ];
 
 const textVariants = {
-    initial: { opacity: 0, scale: 0.8, rotate: -10, y: 50 },
+    initial: { opacity: 0, scale: 0.8, rotate: -10, y: 60 },  // Increased y offset
     animate: { opacity: 1, scale: 1, rotate: 0, y: 0 },
-    exit: { opacity: 0, scale: 0.8, rotate: 10, y: -50 }
+    exit: { opacity: 0, scale: 0.8, rotate: 10, y: -60 }     // Increased y offset
 };
 
 const TypewriterEffect = () => {
@@ -39,7 +39,7 @@ const TypewriterEffect = () => {
             }
 
             if (!isDeleting && charIndex === currentText.length) {
-                setTimeout(() => setIsDeleting(true), 1000); // Pause before deleting
+                setTimeout(() => setIsDeleting(true), 1500); // Increased pause before deleting
             } else if (isDeleting && charIndex === 0) {
                 setIsDeleting(false);
                 setIndex((prevIndex) => (prevIndex + 1) % texts.length);
@@ -53,11 +53,11 @@ const TypewriterEffect = () => {
     }, [charIndex, isDeleting, index, speed, mounted]);
 
     if (!mounted) {
-        return <div style={{ minHeight: '40px' }}></div>; // Ensure consistent height during hydration
+        return <div style={{ minHeight: '60px' }}></div>; // Increased minimum height
     }
 
     return (
-        <div className="text-center" style={{ minHeight: '40px' }}>
+        <div className="text-center" style={{ minHeight: '60px' }}>  {/* Increased minimum height */}
             <AnimatePresence>
                 <motion.div
                     key={index}
@@ -65,8 +65,8 @@ const TypewriterEffect = () => {
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    transition={{ duration: 0.5 }}
-                    className="text-xl font-semibold text-blue-300"
+                    transition={{ duration: 0.6 }}  // Slightly increased animation duration
+                    className="text-3xl font-bold text-blue-400 tracking-wide"  // Increased text size and adjusted styling
                 >
                     {displayText}
                 </motion.div>
