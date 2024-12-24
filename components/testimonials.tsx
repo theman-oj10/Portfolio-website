@@ -9,6 +9,7 @@ import { getTestimonials, addTestimonial } from '@/actions/testimonials'
 import { Testimonial } from '@/types/testimonial'
 import { FaQuoteLeft } from "react-icons/fa"
 import toast from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 
 export default function Testimonials() {
   const { ref } = useSectionInView('Testimonials')
@@ -42,29 +43,38 @@ export default function Testimonials() {
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+  e.preventDefault()
+  setIsSubmitting(true)
 
-    try {
-      const result = await addTestimonial(newTestimonial)
+  try {
+    const result = await addTestimonial(newTestimonial)
+    
+    if (result.approved) {
       setNewTestimonial({ name: '', role: '', message: '' })
-      
-      if (result.approved) {
-        toast.success('Thank you! Your positive testimonial has been posted.')
-        await loadTestimonials()
+      setCharCount(0)
+      toast.success('Thank you! Your positive testimonial has been posted.')
+      await loadTestimonials()
+    } else {
+      // Check sentiment and show appropriate message
+      if (result.sentiment === 'negative') {
+        toast.error('Please say something nicer! 😊')
+      } else if (result.sentiment === 'neutral') {
+        toast.error("That's not nice enough! Try to be more positive 😄")
       } else {
-        const message = result.sentiment === 'negative' 
-          ? 'Thank you for your feedback. Your testimonial requires review before posting.'
-          : 'Thank you for your feedback! Your testimonial will be reviewed before posting.'
-        toast.success(message)
+        toast.success('Thank you for your feedback! Your testimonial will be reviewed before posting.')
       }
-    } catch (error) {
+    }
+  } catch (error) {
+    if (error instanceof Error && error.message.includes('Rate limit exceeded')) {
+      toast.error(error.message)
+    } else {
       console.error('Error submitting testimonial:', error)
       toast.error('Failed to submit testimonial. Please try again.')
-    } finally {
-      setIsSubmitting(false)
     }
+  } finally {
+    setIsSubmitting(false)
   }
+}
 
   const handleChange = (
   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -87,16 +97,17 @@ export default function Testimonials() {
 
   return (
     <section
-      ref={ref}
-      id="testimonials"
-      className="scroll-mt-28 mb-28 sm:mb-40"
-    >
-      <div className="w-full px-4">
-        <SectionHeading>Testimonials</SectionHeading>
-        <p className="text-center mb-8 text-gray-600 dark:text-gray-400">
-          Note that you CAN'T say anything bad as there is an NLP model that will filter out bad comments 😊
-        </p>
-      </div>
+    ref={ref}
+    id="testimonials"
+    className="scroll-mt-28 mb-28 sm:mb-40"
+  >
+    <Toaster position="bottom-right" />
+    <div className="w-full px-4">
+      <SectionHeading>Testimonials</SectionHeading>
+      <p className="text-center mb-8 text-gray-600 dark:text-gray-400">
+        Note that you CAN&apos;'T say anything bad as there is an NLP model that will filter out bad comments 😊
+      </p>
+    </div>
 
       {isLoading ? (
         <div className="flex justify-center items-center h-[400px]">
@@ -137,7 +148,7 @@ export default function Testimonials() {
                     <div>
                       <FaQuoteLeft className="text-3xl text-gray-300 dark:text-gray-700 mb-4" />
                       <p className="text-lg italic text-gray-700 dark:text-white/80">
-                        "{testimonial.message}"
+                        &quot;"{testimonial.message}&quot;"
                       </p>
                     </div>
                     <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700 mt-4">
