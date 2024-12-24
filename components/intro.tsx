@@ -67,65 +67,65 @@ export default function Intro() {
       ref={ref}
       className="max-w-[90rem] text-center scroll-mt-0 min-h-screen flex items-center"
     >
-      <div className="flex flex-col lg:flex-row items-center justify-between">
+      <div className="flex flex-col lg:flex-row items-center justify-between w-full">
         {/* Left side - Text content */}
-        <div className="w-full lg:w-1/2 z-10 px-8">
-          <motion.h1
-            className="mb-10 text-4xl font-bold leading-tight"
+        <div className="w-full lg:w-1/2 z-10 px-12">
+          <motion.div
+            className="mb-16 space-y-6"
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            <p className="mb-8 text-7xl font-bold">Manoj Narender</p>
-            <p className="mb-8 text-4xl font-semibold">
+            <h1 className="mb-8 text-8xl font-bold bg-gradient-to-r from-blue-400 via-blue-200 to-blue-400 text-transparent bg-clip-text">
+              Manoj Narender
+            </h1>
+            <p className="mb-8 text-5xl font-semibold text-gray-200">
               NUS Computer Science and Quantitative Finance
             </p>
-            
-            <p className="mb-8 text-3xl font-normal">
+            <p className="text-2xl text-gray-300 font-medium">
+              Specialising in AI and Database Systems
+            </p>
+            <div className="text-3xl font-normal text-gray-200 mt-8">
               I&#39;m interested in{" "}
               {isClient && <TypewriterEffect />}
-            </p>
-          </motion.h1>
+            </div>
+          </motion.div>
 
           <motion.div
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 px-4"
+            className="flex flex-col sm:flex-row items-center justify-center gap-6 px-4"
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
           >
-            <Link
-              href="#contact"
-              className="group bg-gray-900 text-white px-10 py-4 text-xl flex items-center gap-3 rounded-full
-                    outline-none focus:scale-110 hover:scale-110 hover:bg-gray-950 active:scale-105 transition"
-              onClick={() => {
-                setActiveSection("Contact");
-                setTimeOfLastClick(Date.now());
-              }}
-            >
-              Contact{" "}
-              <BsArrowRight className="text-xl opacity-70 group-hover:translate-x-1 transition" />
-            </Link>
-
             <a
-              className="group bg-white px-10 py-4 text-xl flex items-center gap-3 rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer dark:bg-white/10"
+              className="group bg-gray-800 text-white px-12 py-4 text-xl flex items-center gap-3 rounded-full 
+                         outline-none focus:scale-110 hover:scale-110 active:scale-105 transition-all duration-300 
+                         shadow-lg hover:shadow-gray-500/50 hover:bg-gray-700"
               href="/resume.pdf"
               download
             >
               Resume{" "}
-              <HiDownload className="text-xl opacity-70 group-hover:translate-y-1 transition" />
+              <HiDownload className="text-xl opacity-70 group-hover:translate-y-1 transition-all duration-300" />
             </a>
 
-            <a
-              href="https://www.linkedin.com/in/manoj-narender-99a363228/"
-              className="bg-white p-5 text-gray-700 flex items-center gap-2 rounded-full dark:bg-white/60 dark:text-white/60 cursor-pointer focus:scale-[1.15] hover:scale-[1.15] active:scale-105 transition"
-            >
-              <BsLinkedin className="text-2xl" />
-            </a>
-            <a
-              href="https://github.com/theman-oj10"
-              className="bg-white p-5 text-gray-700 flex items-center gap-2 rounded-full dark:bg-white/60 dark:text-white/60 cursor-pointer focus:scale-[1.15] hover:scale-[1.15] active:scale-105 transition"
-            >
-              <FaGithub className="text-2xl" />
-            </a>
+            <div className="flex gap-4">
+              <a
+                href="https://www.linkedin.com/in/manoj-narender-99a363228/"
+                className="bg-gray-800 p-5 text-blue-400 flex items-center gap-2 rounded-full 
+                           cursor-pointer focus:scale-[1.15] hover:scale-[1.15] active:scale-105 
+                           transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30"
+              >
+                <BsLinkedin className="text-2xl" />
+              </a>
+              <a
+                href="https://github.com/theman-oj10"
+                className="bg-gray-800 p-5 text-gray-200 flex items-center gap-2 rounded-full 
+                           cursor-pointer focus:scale-[1.15] hover:scale-[1.15] active:scale-105 
+                           transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/30"
+              >
+                <FaGithub className="text-2xl" />
+              </a>
+            </div>
           </motion.div>
         </div>
 
@@ -134,8 +134,10 @@ export default function Intro() {
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
-            type: "tween",
-            duration: 0.2,
+            type: "spring",
+            stiffness: 100,
+            damping: 20,
+            duration: 0.8
           }}
           className="w-full lg:w-1/2 h-screen relative"
         >
@@ -148,21 +150,21 @@ export default function Intro() {
             }}
             className="h-full"
           >
-            <ambientLight intensity={1} />
+            <ambientLight intensity={1.2} />
             <spotLight
               position={[0, 0, 5]}
-              intensity={2}
+              intensity={2.5}
               angle={0.5}
               penumbra={0.5}
               castShadow
             />
             <directionalLight 
               position={[5, 5, 5]} 
-              intensity={1}
+              intensity={1.2}
             />
             <directionalLight 
               position={[-5, 5, -5]} 
-              intensity={1}
+              intensity={1.2}
             />
             
             <Suspense fallback={null}>
