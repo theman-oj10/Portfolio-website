@@ -1,7 +1,7 @@
 name: Supabase Keep-Alive
 on:
   schedule:
-    - cron: '0 0 */6 * *'  # Every 6 days at midnight
+    - cron: '0 0 */5 * *'  # Every 6 days at midnight
   workflow_dispatch:        # Allow manual trigger
 
 jobs:
@@ -10,4 +10,4 @@ jobs:
     steps:
       - name: Ping Database
         run: |
-          curl -X GET "${{ secrets.APP_URL }}/api/keep-alive" -v  # Added -v for verbose output
+          curl -X GET "${{ secrets.APP_URL }}/api/cron/keep-alive" -v  # Added -v for verbose output
