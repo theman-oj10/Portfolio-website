@@ -2,18 +2,20 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-// Create a new Supabase client just for this endpoint
-const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL!,
-  process.env.REACT_APP_SUPABASE_ANON_KEY!
-)
-
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export async function GET() {
   try {
-    console.log('Starting keep-alive ping...')
+    // Use the exact environment variable names from your Vercel config
+    const supabaseUrl = process.env.REACT_APP_SUPABASE_PROJECT_URL
+    const supabaseKey = process.env.REACT_APP_SUPABASE_API_KEY
+    
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Supabase credentials are missing')
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey)
     
     const { data, error } = await supabase
       .from('testimonials')
