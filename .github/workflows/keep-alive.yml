@@ -27,7 +27,7 @@ jobs:
             echo "⚠️ Warning: Supabase credentials not configured in secrets"
           else
             echo "Checking Supabase connection..."
-            RESPONSE=$(curl -s -X GET "$SUPABASE_URL/rest/v1/testimonials?select=id,name,role&approved=eq.true&limit=1" \
+            RESPONSE=$(curl -s -X GET "$SUPABASE_URL/rest/v1/testimonials?select=id,name,role,message,date&approved=eq.true&order=date.desc&limit=1" \
               -H "apikey: $SUPABASE_KEY" \
               -H "Authorization: Bearer $SUPABASE_KEY")
             
@@ -37,6 +37,9 @@ jobs:
                 echo "ℹ️ No approved testimonials found in the database"
               else
                 echo "✅ Testimonials are available in the database"
+                echo "📝 Latest testimonial:"
+                # Parse and display the testimonial in a readable format
+                echo "$RESPONSE" | jq -r '.[0] | "From: \(.name) (\(.role))\nDate: \(.date)\nMessage: \(.message)"'
               fi
             else
               echo "⚠️ Warning: Failed to connect to Supabase or received unexpected response"
@@ -49,5 +52,6 @@ jobs:
           RESPONSE=$(curl -s "https://manojnarender.vercel.app/")
           if [[ "$RESPONSE" == *"Manoj Narender"* ]]; then
             echo "Website is up and running!"
-            
-            # Rest of your existing checks...
+          else
+            echo "⚠️ Warning: Website might be down or changed"
+          fi
