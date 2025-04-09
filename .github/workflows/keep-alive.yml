@@ -24,12 +24,34 @@ jobs:
           if [[ "$RESPONSE" == *"Manoj Narender"* ]]; then
             echo "Website is up and running!"
             
-            # Check for testimonials content
-            if [[ "$RESPONSE" == *"testimonial-card"* || "$RESPONSE" == *"testimonial-message"* || "$RESPONSE" == *"testimonial-author"* ]]; then
-              echo "✅ Testimonials are loading successfully!"
+            # Check for testimonials section existence
+            if [[ "$RESPONSE" == *"id=\"testimonials\""* ]]; then
+              echo "✅ Testimonials section exists on the page"
+              
+              # Check for testimonials carousel/container
+              if [[ "$RESPONSE" == *"flex absolute left-0 gap-4 py-4"* ]]; then
+                # This is the container div for testimonials
+                
+                # Check if actual testimonial data is loaded
+                if [[ "$RESPONSE" == *"data-testimonial-id"* || "$RESPONSE" == *"testimonial-author"* || "$RESPONSE" == *"testimonial-role"* ]]; then
+                  echo "✅ Testimonials are loading from the database successfully!"
+                else
+                  echo "⚠️ Warning: Testimonials container exists but no testimonial data found"
+                  echo "This could indicate a Supabase connection issue"
+                fi
+              else
+                echo "⚠️ Warning: Testimonials carousel container not found"
+                echo "This could indicate a rendering issue with the testimonials component"
+              fi
+              
+              # Check if the form is present (which should always be there)
+              if [[ "$RESPONSE" == *"Enter your name"* && "$RESPONSE" == *"Your role or company name"* ]]; then
+                echo "✅ Testimonials form is loading correctly"
+              else
+                echo "⚠️ Warning: Testimonials form elements not found"
+              fi
             else
-              echo "⚠️ Warning: Website is up but testimonials might not be loading"
-              echo "This could indicate a Supabase connection issue"
+              echo "⚠️ Warning: Testimonials section not found on the page"
             fi
           else
             echo "⚠️ Warning: Website might be down or changed"
