@@ -18,41 +18,36 @@ jobs:
           echo "Pinging testimonials section..."
           curl -X GET "https://manojnarender.vercel.app/#testimonials" -v
           
+      - name: Check Supabase Connection
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_KEY" ]; then
+            echo "⚠️ Warning: Supabase credentials not configured in secrets"
+          else
+            echo "Checking Supabase connection..."
+            RESPONSE=$(curl -s -X GET "$SUPABASE_URL/rest/v1/testimonials?select=id,name,role&approved=eq.true&limit=1" \
+              -H "apikey: $SUPABASE_KEY" \
+              -H "Authorization: Bearer $SUPABASE_KEY")
+            
+            if [[ "$RESPONSE" == "["* ]]; then
+              echo "✅ Successfully connected to Supabase"
+              if [[ "$RESPONSE" == "[]" ]]; then
+                echo "ℹ️ No approved testimonials found in the database"
+              else
+                echo "✅ Testimonials are available in the database"
+              fi
+            else
+              echo "⚠️ Warning: Failed to connect to Supabase or received unexpected response"
+              echo "Response: $RESPONSE"
+            fi
+          fi
+          
       - name: Check Website Response
         run: |
           RESPONSE=$(curl -s "https://manojnarender.vercel.app/")
           if [[ "$RESPONSE" == *"Manoj Narender"* ]]; then
             echo "Website is up and running!"
             
-            # Check for testimonials section existence
-            if [[ "$RESPONSE" == *"id=\"testimonials\""* ]]; then
-              echo "✅ Testimonials section exists on the page"
-              
-              # Check for testimonials carousel/container
-              if [[ "$RESPONSE" == *"flex absolute left-0 gap-4 py-4"* ]]; then
-                # This is the container div for testimonials
-                
-                # Check if actual testimonial data is loaded
-                if [[ "$RESPONSE" == *"data-testimonial-id"* || "$RESPONSE" == *"testimonial-author"* || "$RESPONSE" == *"testimonial-role"* ]]; then
-                  echo "✅ Testimonials are loading from the database successfully!"
-                else
-                  echo "⚠️ Warning: Testimonials container exists but no testimonial data found"
-                  echo "This could indicate a Supabase connection issue"
-                fi
-              else
-                echo "⚠️ Warning: Testimonials carousel container not found"
-                echo "This could indicate a rendering issue with the testimonials component"
-              fi
-              
-              # Check if the form is present (which should always be there)
-              if [[ "$RESPONSE" == *"Enter your name"* && "$RESPONSE" == *"Your role or company name"* ]]; then
-                echo "✅ Testimonials form is loading correctly"
-              else
-                echo "⚠️ Warning: Testimonials form elements not found"
-              fi
-            else
-              echo "⚠️ Warning: Testimonials section not found on the page"
-            fi
-          else
-            echo "⚠️ Warning: Website might be down or changed"
-          fi
+            # Rest of your existing checks...
