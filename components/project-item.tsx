@@ -12,6 +12,7 @@ type ProjectProps = (typeof projectsData)[number] & {
   youtubeUrl?: string;
   externalUrl?: string;
   link?: string;
+  subtitle?: string;
 };
 
 export default function Project({
@@ -22,6 +23,7 @@ export default function Project({
   githubUrl,
   youtubeUrl,
   link,
+  subtitle,
 }: ProjectProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -40,11 +42,18 @@ export default function Project({
       }}
       className="group mb-3 sm:mb-6 last:mb-0"
     >
-      <section className="bg-gray-100 max-w-[38rem] border border-black/5 rounded-lg overflow-hidden sm:pr-8 relative sm:h-[20rem] hover:bg-gray-200 transition sm:group-even:pl-8 dark:text-white dark:bg-white/10 dark:hover:bg-white/20">
-        <div className="pt-3 pb-5 px-4 sm:pl-8 sm:pr-2 sm:pt-8 sm:max-w-[60%] flex flex-col h-full sm:group-even:ml-[14rem]">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1">
-            <h3 className="text-xl font-semibold">{title}</h3>
-            <div className="flex items-center gap-2 mt-1 sm:mt-0">
+      <section className="bg-gray-100 max-w-[38rem] border border-black/5 rounded-lg overflow-hidden sm:pr-8 relative sm:h-[20rem] hover:bg-gray-200 transition sm:group-even:pl-0 dark:text-white dark:bg-white/10 dark:hover:bg-white/20">
+        <div className="pt-3 pb-5 px-4 sm:pl-8 sm:pr-2 sm:pt-8 sm:max-w-[60%] flex flex-col h-full sm:group-even:ml-[12rem]">
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="text-xl font-semibold">{title}</h3>
+              {subtitle && (
+                <p className="text-sm text-blue-600 dark:text-blue-400 mt-0.5">
+                  {subtitle}
+                </p>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
               {link && (
                 <a
                   href={link}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import SectionHeading from './section-heading';
@@ -9,6 +9,7 @@ import { useSectionInView } from '@/lib/hooks';
 import { motion, useAnimation } from "framer-motion";
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
+import Script from 'next/script';
 
 const fadeInAnimationVariants = {
     hidden: (index: number) => {

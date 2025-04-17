@@ -1,16 +1,21 @@
 import React from "react";
 import { LuBriefcase, LuGraduationCap, LuHammer, LuHome, LuSchool } from "react-icons/lu";
-import HangImg from "@/public/Hang-UI.png";
+// import HangImg from "@/public/Hang-UI.png";
 import RhAppImg from "@/public/rhapp-ui.png";
 import CareerSyncImg from "@/public/careersync-ui.png";
 import RhWebsiteImg from "@/public/rhwebsite-ui.png";
 import AlfredImg from "@/public/alfred-ui.png";
 import HoopifyImg from "@/public/hoopify4.png";
 import DescentImg from "@/public/descentAi.png";
-import { FaPython, FaJava, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDocker, FaAws, FaGithub } from "react-icons/fa";
-import { SiTypescript, SiGithubactions, SiJunit5, SiTailwindcss, SiSelenium, SiRedux, SiFlask, SiExpress, SiPytorch, SiOpencv, SiTensorflow, SiNumpy, SiPandas, SiScikitlearn, SiRos, SiMongodb, SiPostgresql, SiFirebase, SiGooglecloud } from "react-icons/si";
-import {BsFiletypeJava} from "react-icons/bs";
+import FlairImg from "@/public/FlairAI-UI.png";
+import BlochangeImg from "@/public/Blochange-UI.png";
+import HangImg from "@/public/HangMobile-UI.png";
+import { FaEthereum, FaPython, FaJava, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDocker, FaAws, FaGithub, FaPizzaSlice, FaRobot } from "react-icons/fa";
+import { SiFastapi, SiSupabase, SiTypescript, SiGithubactions, SiJunit5, SiTailwindcss, SiSelenium, SiRedux, SiFlask, SiExpress, SiPytorch, SiOpencv, SiTensorflow, SiNumpy, SiPandas, SiScikitlearn, SiRos, SiMongodb, SiPostgresql, SiFirebase, SiGooglecloud, SiOpensearch, SiNextdotjs, SiAmazondynamodb, SiC, SiSolidity } from "react-icons/si";
+import {BsFiletypeJava, BsMeta} from "react-icons/bs";
 import { TbSoup, TbBrandPython } from "react-icons/tb";
+import { GoogleGeminiIcon } from "hugeicons-react";
+import { LangchainIcon, OllamaIcon } from "@/components/custom-icons";
 // import { link } from "fs";
 
 export const links = [
@@ -46,10 +51,25 @@ export const links = [
 
 export const experiencesData = [
   {
+    title: "AI Engineer Intern",
+    location: "Seekeasy (San Francisco, NOC Silicon Valley Program)",
+    date: "Jan 2025 - Apr 2025",
+    icon: React.createElement(FaPizzaSlice),
+    description: [
+      "• Developed user personalization for search infrastructure using KNN with OpenSearch.",
+      "• Built an automated creator sourcing and classification pipeline leveraging web scraping frameworks and LLMs.",
+      "• Automated several workflows using AWS CloudFormation and Lambda Functions.",
+      "• Fine-tuned the custom embedding model, improving relevance and performance, and optimised it using a caching layer.",
+      "• Applied K-means clustering for social media data embeddings for deeper content and user insights.",
+      "• Built the personalization feature and other UI elements in the frontend using React Native and Tailwind CSS.",
+      "• Integrated A/B Testing with Firebase",
+    ],
+  },
+  {
     title: "Software Intern",
     location: "Kabam Robotics",
     date: "May 2024 - Aug 2024",
-    icon: React.createElement(LuHammer),
+    icon: React.createElement(FaRobot),
     description: [
       "• Designed and implemented Ask-AI feature to automate the facility management feature.",
       "• Collected and processed large amounts of video and photo data from Robots.",
@@ -88,8 +108,9 @@ export const experiencesData = [
     icon: React.createElement(LuGraduationCap),
     date: "2022 - 2026",
     description: [
-        "• Second Major in Quantitative Finance",
-        "• Raffles Hall: Basketball, Football, Block Committee, Sports Management Committee, Alumni Affairs Exchange Committee, Culture Committee, Bash Committee, Voices",
+      "• Specializing in AI and Database Systems",
+      "• Second Major in Quantitative Finance",
+      "• Raffles Hall: Basketball, Football, Block Committee, Sports Management Committee, Alumni Affairs Exchange Committee, Culture Committee, Bash Committee, Voices",
     ]
 },
   {
@@ -122,33 +143,51 @@ export const experiencesData = [
 
 export const projectsData = [
   {
-    title: "Hoopify",
-    description: "Cross-platform mobile app that analyzes user-uploaded basketball videos and provides in-depth analytics",
-    tags: ["React Native", "OpenCV", "Flask", "Firebase", "Google Cloud"],
-    imageUrl: HoopifyImg,
-    githubUrl: "https://github.com/theman-oj10/Hoopify",
-    youtubeUrl: "https://youtu.be/0AsMlBGDdNY",
-    
+    title: "Flair AI",
+    subtitle: "AI for Good Hackathon San Francisco First Place",
+    description: "Essay grading web-app, featuring rubric-based AI grading, live performance metrics, advanced grammar checks, historical error tracking and an AI voice agent that enables students to clarify grading decisions",
+    tags: ["React.js", "TypeScript", "FastAPI", "Gemini"],
+    imageUrl: FlairImg,
+    githubUrl: "https://github.com/ryryry-3302/flare.ai",
+    youtubeUrl: "https://www.youtube.com/watch?v=ia1Ee2U0DO8"
+  },
+  {
+    title: "Blochange",
+    subtitle: "AIDF/Franklin Templeton Blockchain Pitchnight Finalist",
+    description: "Blockchain-based platform that ensures transparency in charitable giving through immutable records and automates fund distribution based on a donor voting system",
+    tags: ["Next.js", "Tailwind CSS", "Solidity", "MongoDB", "Ether.js"],
+    imageUrl: BlochangeImg,
+    githubUrl: "https://github.com/theman-oj10/Blochange-Repo",
+    youtubeUrl: "https://www.youtube.com/watch?v=SCRSsmglxOM"
+  },
+  {
+    title: "Hang",
+    description:
+    "Cross-platform mobile app with a recommendation engine that leverages Llama 3.1 Model, user profiles, and Yelp API data to curate activities and food options catered to user preferences",
+    tags: ["Langchain", "Ollama", "Chroma DB", "LLama 3.1", "React Native", "Flask", "MongoDB"],
+    imageUrl: HangImg,
+    githubUrl: "https://github.com/theman-oj10/Hang-2.0/",
+    youtubeUrl: "https://youtu.be/1UusvrWLx_U",
   },
   {
     title: "Descent AI",
     description: [
-        "Web-Platform to practice AI and machine learning technical interview questions, it provides tools to visualize various AI/ML concepts and algorithms."],
-    tags: ["React.js", "Tailwind CSS","Node.js", "Docker"],
+        "Web-Platform to practice AI and machine learning technical interview questions, it provides tools to visualize various AI/ML concepts and algorithms"],
+    tags: ["React.js", "Tailwind CSS","Node.js", "Express.js", "Docker"],
     imageUrl: DescentImg, 
     githubUrl: "https://github.com/domoberzin/descent_frontend", 
     link: "https://descent.lol/"
     // youtubeUrl: "https://youtu.be/your-video-id"  // Replace with the actual YouTube URL
 },
-  {
-    title: "Hang",
-    description:
-      "Web app with a custom recommendation engine that leverages user profiles to curate activities and food options.",
-    tags: ["React.js", "Node.js", "Express.js", "MongoDB"],
-    imageUrl: HangImg,
-    githubUrl: "https://github.com/theman-oj10/Hang-Repo",
-    youtubeUrl: "https://youtu.be/KrhPOl-6h4Y",
-  },
+{
+  title: "Hoopify",
+  description: "Cross-platform mobile app that analyzes user-uploaded basketball videos and provides in-depth analytics",
+  tags: ["React Native", "OpenCV", "Flask", "Firebase", "Google Cloud"],
+  imageUrl: HoopifyImg,
+  githubUrl: "https://github.com/theman-oj10/Hoopify",
+  youtubeUrl: "https://youtu.be/0AsMlBGDdNY",
+  
+},
   {
     title: "Raffles Hall App",
     description:
@@ -190,14 +229,16 @@ export const projectsData = [
 export const skillsData = [
   "Python",
   "Java",
+  "C",
   "HTML",
   "CSS",
   "JavaScript",
   "TypeScript",
   "React.js",
+  "Next.js",
+  "Tailwind CSS",
   "Redux",
   "React Native",
-  "C",
   "Flask",
   "Node.js",
   "Express.js",
@@ -211,22 +252,29 @@ export const skillsData = [
   "Scikit-learn",
   "Selenium",
   "BeautifulSoup",
-  "ROS",
   "MongoDB",
   "PostgreSQL",
-  "Docker",
+  "DynamoDB",
+  "Supabase",
   "Firebase",
+  "Docker",
   "AWS",
   "Google Cloud",
+  "OpenSearch",
+  "Langchain",
 ] as const;
+
 export const skillsIcons = {
   Python: FaPython,
   Java: FaJava,
+  C: SiC,
   HTML: FaHtml5,
   CSS: FaCss3Alt,
   JavaScript: FaJs,
   TypeScript: SiTypescript,
   "React.js": FaReact,
+  "Next.js": SiNextdotjs,
+  "Tailwind CSS": SiTailwindcss,
   Redux: SiRedux,
   "React Native": FaReact,
   Flask: SiFlask,
@@ -242,9 +290,9 @@ export const skillsIcons = {
   Seaborn: TbBrandPython,
   Selenium: SiSelenium,
   BeautifulSoup: TbSoup,
-  ROS: SiRos,
   MongoDB: SiMongodb,
   PostgreSQL: SiPostgresql,
+  "DynamoDB": SiAmazondynamodb,
   Docker: FaDocker,
   Firebase: SiFirebase,
   AWS: FaAws,
@@ -252,5 +300,13 @@ export const skillsIcons = {
   "Google Cloud": SiGooglecloud,
   "JavaFx": BsFiletypeJava,
   "JUnit": SiJunit5,
-  "Tailwind CSS": SiTailwindcss,
+  "OpenSearch": SiOpensearch,
+  "Supabase": SiSupabase,
+  "Solidity": SiSolidity,
+  "Ether.js": FaEthereum,
+  "Gemini": GoogleGeminiIcon,
+  "FastAPI": SiFastapi,
+  "Langchain": LangchainIcon,
+  "Ollama": OllamaIcon,
+  "LLama 3.1": BsMeta,
 };
