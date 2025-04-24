@@ -2,20 +2,21 @@ import React from "react";
 import { LuBriefcase, LuGraduationCap, LuHammer, LuHome, LuSchool } from "react-icons/lu";
 // import HangImg from "@/public/Hang-UI.png";
 import RhAppImg from "@/public/rhapp-ui.png";
-import CareerSyncImg from "@/public/careersync-ui.png";
+import CareerSyncImg from "@/public/image.png";
 import RhWebsiteImg from "@/public/rhwebsite-ui.png";
 import AlfredImg from "@/public/alfred-ui.png";
-import HoopifyImg from "@/public/hoopify4.png";
+import HoopifyImg from "@/public/hoopify.png";
 import DescentImg from "@/public/descentAi.png";
 import FlairImg from "@/public/FlairAI-UI.png";
 import BlochangeImg from "@/public/Blochange-UI.png";
-import HangImg from "@/public/HangMobile-UI.png";
+import HangImg from "@/public/hang-right-2.png";
 import { FaEthereum, FaPython, FaJava, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDocker, FaAws, FaGithub, FaPizzaSlice, FaRobot } from "react-icons/fa";
 import { SiFastapi, SiSupabase, SiTypescript, SiGithubactions, SiJunit5, SiTailwindcss, SiSelenium, SiRedux, SiFlask, SiExpress, SiPytorch, SiOpencv, SiTensorflow, SiNumpy, SiPandas, SiScikitlearn, SiRos, SiMongodb, SiPostgresql, SiFirebase, SiGooglecloud, SiOpensearch, SiNextdotjs, SiAmazondynamodb, SiC, SiSolidity } from "react-icons/si";
 import {BsFiletypeJava, BsMeta} from "react-icons/bs";
 import { TbSoup, TbBrandPython } from "react-icons/tb";
 import { GoogleGeminiIcon } from "hugeicons-react";
 import { LangchainIcon, OllamaIcon } from "@/components/custom-icons";
+import FocusPalImg from "@/public/FocusPalUI.png";
 // import { link } from "fs";
 
 export const links = [
@@ -152,6 +153,15 @@ export const projectsData = [
     youtubeUrl: "https://www.youtube.com/watch?v=ia1Ee2U0DO8"
   },
   {
+    title: "FocusPal",
+    subtitle: "HackDavis 2025 Most Technically Challenging Hack",
+    description: "A real-time web app that uses a MTCNN CV Model to track focus from webcam input, dynamically generating and adapting study content with LLMs based on user focus levels.",
+    tags: ["Next.js", "WebSockets", "MTCNN", "TypeScript", "Flask", "Gemini"],
+    imageUrl: FocusPalImg,
+    githubUrl: "https://github.com/FocusPals",
+    youtubeUrl: "https://www.youtube.com/watch?v=clUheneCxig"
+  },
+  {
     title: "Blochange",
     subtitle: "AIDF/Franklin Templeton Blockchain Pitchnight Finalist",
     description: "Blockchain-based platform that ensures transparency in charitable giving through immutable records and automates fund distribution based on a donor voting system",
@@ -162,41 +172,41 @@ export const projectsData = [
   },
   {
     title: "Hang",
-    description:
-    "Cross-platform mobile app with a recommendation engine that leverages Llama 3.1 Model, user profiles, and Yelp API data to curate activities and food options catered to user preferences",
+    description:"Cross-platform mobile app with a recommendation engine that leverages Llama 3.1 Model, user profiles, and Yelp API data to curate activities and food options catered to user preferences",
     tags: ["Langchain", "Ollama", "Chroma DB", "LLama 3.1", "React Native", "Flask", "MongoDB"],
     imageUrl: HangImg,
     githubUrl: "https://github.com/theman-oj10/Hang-2.0/",
     youtubeUrl: "https://youtu.be/1UusvrWLx_U",
   },
-  {
-    title: "Descent AI",
-    description: [
-        "Web-Platform to practice AI and machine learning technical interview questions, it provides tools to visualize various AI/ML concepts and algorithms"],
-    tags: ["React.js", "Tailwind CSS","Node.js", "Express.js", "Docker"],
-    imageUrl: DescentImg, 
-    githubUrl: "https://github.com/domoberzin/descent_frontend", 
-    link: "https://descent.lol/"
-    // youtubeUrl: "https://youtu.be/your-video-id"  // Replace with the actual YouTube URL
-},
+  
 {
   title: "Hoopify",
   description: "Cross-platform mobile app that analyzes user-uploaded basketball videos and provides in-depth analytics",
   tags: ["React Native", "OpenCV", "Flask", "Firebase", "Google Cloud"],
   imageUrl: HoopifyImg,
   githubUrl: "https://github.com/theman-oj10/Hoopify",
-  youtubeUrl: "https://youtu.be/0AsMlBGDdNY",
-  
+  youtubeUrl: "https://youtu.be/0AsMlBGDdNY"
+},
+{
+  title: "Descent AI",
+  description: [
+      "Web-Platform to practice AI and machine learning technical interview questions, it provides tools to visualize various AI/ML concepts and algorithms"],
+  tags: ["React.js", "Tailwind CSS","Node.js", "Express.js", "Docker"],
+  imageUrl: DescentImg, 
+  githubUrl: "https://github.com/domoberzin/descent_frontend", 
+  link: "https://descent.lol/"
+  // youtubeUrl: "https://youtu.be/your-video-id"  // Replace with the actual YouTube URL
 },
   {
     title: "Raffles Hall App",
     description:
-      "Web app for Raffles Hall residents to access hall events, facilities and services.",
+      "Web app for Raffles Hall residents to access hall events, facilities and services",
     tags: ["React.js", "TypeScript", "Redux", "Flask", "MongoDB"],
     imageUrl: RhAppImg,
     githubUrl: "https://github.com/rhdevs/rhapp",
     link: "https://www.rhapp.lol/"
   },
+  
   {
     title: "CareerSync",
     description:
